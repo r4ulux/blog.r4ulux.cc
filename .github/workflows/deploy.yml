@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+
+on: 
+  # 當推送到 `main` 分支時觸發工作流程
+  push:
+    branches: [ main ]
+  # 允許從 GitHub Actions 手動觸發此工作流程
+  workflow_dispatch:
+
+# 設置必要的權限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    # 使用最新版本的 Ubuntu 作為運行環境
+    runs-on: ubuntu-latest
+    steps:
+      # 第一步：檢出你的程式碼倉庫
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+
+      # 第二步：安裝依賴、建置專案並上傳
+      - name: Install, build, and upload your site
+        uses: withastro/action@v3
+        with: 
+          # 指定 Astro 專案的根目錄（如果不是專案根目錄，請修改此路徑）
+          path: .
+          # 指定 Node.js 版本（可選，預設為 20）
+          node-version: 20
+          # 指定包管理工具及版本
+          package-manager: pnpm@latest
+
+  deploy:
+    # 需要先完成 `build` 階段
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
