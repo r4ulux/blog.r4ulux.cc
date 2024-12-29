@@ -39,8 +39,8 @@ const work = await Promise.all(
       <section>
         <article class="space-y-4">
           <p class="animate">
-            作為一名系統整合（SI）工程師，我專注於系統與網路的建置及維護，確保各項技術解決方案的穩定運行。
-            在繁忙的工作之餘，我持續自我提升，專注於學習滲透測試與資訊安全的相關技能。
+            As a System Integration (SI) Engineer, I specialize in building and maintaining systems and networks, ensuring the stable operation of various technical solutions.
+            Despite a busy work schedule, I continuously strive for self-improvement, focusing on learning skills related to penetration testing and information security.
           </p>
         </article>
       </section>
@@ -58,35 +58,6 @@ const work = await Promise.all(
           {blog.map(post => (
             <li>
               <ArrowCard entry={post} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Work Experience
-          </h5>
-          <Link href="/work">
-            See all work
-          </Link>
-        </div>
-        <ul class="flex flex-col space-y-4">
-          {work.map(entry => (
-            <li>
-              <div class="text-sm opacity-75">
-                {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-              </div>
-              <div class="font-semibold text-black dark:text-white">
-                {entry.data.company}
-              </div>
-              <div class="text-sm opacity-75">
-                {entry.data.role}
-              </div>
-              <article>
-                <entry.Content />
-              </article>
             </li>
           ))}
         </ul>
