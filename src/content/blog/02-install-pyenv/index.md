@@ -54,7 +54,7 @@ pyenv shell 3.13.1
 
 * system：預設 - 切回系統預設版本
 ```
-pyenv system
+pyenv global system
 ```
 
 #### Step7: PyEnv 檢查
