@@ -1,0 +1,29 @@
+---
+import Head from "@components/Head.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@consts";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="google-site-verification" content="1bR97KIqa2LyNQ-ZvuANH2eUtTj27e9TGUi0zHrCSgU" />
+    <link rel="sitemap" href="/sitemap-0.xml" />
+    <Head title={`${title} | ${SITE.NAME}`} description={description} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
