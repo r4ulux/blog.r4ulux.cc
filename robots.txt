@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /about/
+
+Sitemap: https://blog.r4ulux.cc/sitemap.xml
