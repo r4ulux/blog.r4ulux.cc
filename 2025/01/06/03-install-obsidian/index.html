@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Obsidian for OffSec Exam">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Obsidian 用於 OffSec 考試報告">
+<meta property="og:url" content="https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/index.html">
+<meta property="og:site_name" content="r4ulux blog">
+<meta property="og:description" content="Obsidian for OffSec Exam">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-06T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-02T17:04:08.782Z">
+<meta property="article:author" content="r4ulux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Obsidian 用於 OffSec 考試報告</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2025/01/06/02-install-pyenv/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/03/03/01-the-first-article/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&text=Obsidian 用於 OffSec 考試報告"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&is_video=false&description=Obsidian 用於 OffSec 考試報告"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Obsidian 用於 OffSec 考試報告&body=Check out this article: https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&name=Obsidian 用於 OffSec 考試報告&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&t=Obsidian 用於 OffSec 考試報告"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MAC-OS-%E7%89%88%E6%9C%AC"><span class="toc-number">1.</span> <span class="toc-text">MAC OS 版本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Step1-Homebrew-Formulae-%E5%AE%89%E8%A3%9D%E5%A5%97%E4%BB%B6"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">Step1:  Homebrew Formulae 安裝套件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step2-%E5%A5%97%E4%BB%B6%E6%8F%92%E4%BB%B6%E5%95%9F%E7%94%A8%E5%AE%89%E8%A3%9D"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">Step2:  套件插件啟用安裝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-1-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Pandoc-Path"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">Step3.1:  Pandoc Options 設定 Pandoc Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-2-Pandoc-Options-%E8%A8%AD%E5%AE%9A-PDFLatex-Path"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">Step3.2:  Pandoc Options 設定 PDFLatex Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-3-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Extra-Pandoc-Arguments"><span class="toc-number">1.0.0.5.</span> <span class="toc-text">Step3.3:  Pandoc Options 設定 Extra Pandoc Arguments</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-4-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Export-folder"><span class="toc-number">1.0.0.6.</span> <span class="toc-text">Step3.4:  Pandoc Options 設定 Export folder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-5-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Export-file-from-HTML-or-Markdown"><span class="toc-number">1.0.0.7.</span> <span class="toc-text">Step3.5:  Pandoc Options 設定 Export file from HTML or Markdown?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step4-eisvogel-latex"><span class="toc-number">1.0.0.8.</span> <span class="toc-text">Step4:  eisvogel.latex</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step5-Git-Clone-Markdown"><span class="toc-number">1.0.0.9.</span> <span class="toc-text">Step5:  Git Clone Markdown</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step6-Markdown-%E8%BC%B8%E5%87%BA-PDF-%E6%B8%AC%E8%A9%A6"><span class="toc-number">1.0.0.10.</span> <span class="toc-text">Step6:  Markdown 輸出 PDF 測試</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E6%9C%83%E9%A1%AF%E7%A4%BA-Successfully-exported"><span class="toc-number">1.0.0.11.</span> <span class="toc-text">成功會顯示 Successfully exported</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Obsidian 用於 OffSec 考試報告
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">r4ulux</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-01-06T00:00:00.000Z" class="dt-published" itemprop="datePublished">2025-01-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>用於 OffSec 考試使用的 Obsidian 版本</p>
+<h1 id="MAC-OS-版本"><a href="#MAC-OS-版本" class="headerlink" title="MAC OS 版本"></a>MAC OS 版本</h1><hr>
+<h4 id="Step1-Homebrew-Formulae-安裝套件"><a href="#Step1-Homebrew-Formulae-安裝套件" class="headerlink" title="Step1:  Homebrew Formulae 安裝套件"></a>Step1:  <a target="_blank" rel="noopener" href="https://formulae.brew.sh/">Homebrew Formulae</a> 安裝套件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask obsidian</span><br><span class="line">brew install pandoc</span><br><span class="line">brew install --cask mactex</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step2-套件插件啟用安裝"><a href="#Step2-套件插件啟用安裝" class="headerlink" title="Step2:  套件插件啟用安裝"></a>Step2:  套件插件啟用安裝</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Community Plugin -&gt; Turn on community plugins -&gt; Browse -&gt; pandoc -&gt; Install -&gt; Enable</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3-1-Pandoc-Options-設定-Pandoc-Path"><a href="#Step3-1-Pandoc-Options-設定-Pandoc-Path" class="headerlink" title="Step3.1:  Pandoc Options 設定 Pandoc Path"></a>Step3.1:  Pandoc Options 設定 Pandoc Path</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">which pandoc</span><br><span class="line">&gt;&gt; /opt/homebrew/bin/pandoc</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3-2-Pandoc-Options-設定-PDFLatex-Path"><a href="#Step3-2-Pandoc-Options-設定-PDFLatex-Path" class="headerlink" title="Step3.2:  Pandoc Options 設定 PDFLatex Path"></a>Step3.2:  Pandoc Options 設定 PDFLatex Path</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">which pdflatex</span><br><span class="line">&gt;&gt; /Library/Tex/texbin/pdflatex</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3-3-Pandoc-Options-設定-Extra-Pandoc-Arguments"><a href="#Step3-3-Pandoc-Options-設定-Extra-Pandoc-Arguments" class="headerlink" title="Step3.3:  Pandoc Options 設定 Extra Pandoc Arguments"></a>Step3.3:  Pandoc Options 設定 Extra Pandoc Arguments</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--template /Users/r4ulux/.pandoc/templates/eisvogel.latex</span><br><span class="line">--from markdown+yaml_metadata_block+raw_html</span><br><span class="line">--table-of-contents</span><br><span class="line">--toc-depth 4</span><br><span class="line">--number-sections</span><br><span class="line">--top-level-division=chapter</span><br><span class="line">--highlight-style breezedark</span><br><span class="line">--resource-path=.:src</span><br><span class="line">--listings</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3-4-Pandoc-Options-設定-Export-folder"><a href="#Step3-4-Pandoc-Options-設定-Export-folder" class="headerlink" title="Step3.4:  Pandoc Options 設定 Export folder"></a>Step3.4:  Pandoc Options 設定 Export folder</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/r4ulux/Desktop</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step3-5-Pandoc-Options-設定-Export-file-from-HTML-or-Markdown"><a href="#Step3-5-Pandoc-Options-設定-Export-file-from-HTML-or-Markdown" class="headerlink" title="Step3.5:  Pandoc Options 設定 Export file from HTML or Markdown?"></a>Step3.5:  Pandoc Options 設定 Export file from HTML or Markdown?</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Markdown</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step4-eisvogel-latex"><a href="#Step4-eisvogel-latex" class="headerlink" title="Step4:  eisvogel.latex"></a>Step4:  eisvogel.latex</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/.pandoc/templates/</span><br><span class="line"></span><br><span class="line">wget https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/v3.0.0/Eisvogel-3.0.0.zip -O ~/.pandoc/templates/eisvogel.latex.zip</span><br><span class="line"></span><br><span class="line">cd ~/.pandoc/templates unzip eisvogel.latex.zip</span><br><span class="line"></span><br><span class="line">ls -1 | grep -v -E &#x27;^eisvogel.latex$&#x27; | xargs rm -rf</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step5-Git-Clone-Markdown"><a href="#Step5-Git-Clone-Markdown" class="headerlink" title="Step5:  Git Clone Markdown"></a>Step5:  Git Clone Markdown</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/noraj/OSCP-Exam-Report-Template-Markdown.git</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step6-Markdown-輸出-PDF-測試"><a href="#Step6-Markdown-輸出-PDF-測試" class="headerlink" title="Step6:  Markdown 輸出 PDF 測試"></a>Step6:  Markdown 輸出 PDF 測試</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;_ 命令面板輸入以下任何關鍵字</span><br><span class="line">Pandoc Plugin: Export as PDF (via LaTeX)</span><br></pre></td></tr></table></figure>
+
+<h4 id="成功會顯示-Successfully-exported"><a href="#成功會顯示-Successfully-exported" class="headerlink" title="成功會顯示 Successfully exported"></a>成功會顯示 Successfully exported</h4>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Articles</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MAC-OS-%E7%89%88%E6%9C%AC"><span class="toc-number">1.</span> <span class="toc-text">MAC OS 版本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Step1-Homebrew-Formulae-%E5%AE%89%E8%A3%9D%E5%A5%97%E4%BB%B6"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">Step1:  Homebrew Formulae 安裝套件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step2-%E5%A5%97%E4%BB%B6%E6%8F%92%E4%BB%B6%E5%95%9F%E7%94%A8%E5%AE%89%E8%A3%9D"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">Step2:  套件插件啟用安裝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-1-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Pandoc-Path"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">Step3.1:  Pandoc Options 設定 Pandoc Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-2-Pandoc-Options-%E8%A8%AD%E5%AE%9A-PDFLatex-Path"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">Step3.2:  Pandoc Options 設定 PDFLatex Path</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-3-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Extra-Pandoc-Arguments"><span class="toc-number">1.0.0.5.</span> <span class="toc-text">Step3.3:  Pandoc Options 設定 Extra Pandoc Arguments</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-4-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Export-folder"><span class="toc-number">1.0.0.6.</span> <span class="toc-text">Step3.4:  Pandoc Options 設定 Export folder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step3-5-Pandoc-Options-%E8%A8%AD%E5%AE%9A-Export-file-from-HTML-or-Markdown"><span class="toc-number">1.0.0.7.</span> <span class="toc-text">Step3.5:  Pandoc Options 設定 Export file from HTML or Markdown?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step4-eisvogel-latex"><span class="toc-number">1.0.0.8.</span> <span class="toc-text">Step4:  eisvogel.latex</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step5-Git-Clone-Markdown"><span class="toc-number">1.0.0.9.</span> <span class="toc-text">Step5:  Git Clone Markdown</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step6-Markdown-%E8%BC%B8%E5%87%BA-PDF-%E6%B8%AC%E8%A9%A6"><span class="toc-number">1.0.0.10.</span> <span class="toc-text">Step6:  Markdown 輸出 PDF 測試</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E6%9C%83%E9%A1%AF%E7%A4%BA-Successfully-exported"><span class="toc-number">1.0.0.11.</span> <span class="toc-text">成功會顯示 Successfully exported</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&text=Obsidian 用於 OffSec 考試報告"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&is_video=false&description=Obsidian 用於 OffSec 考試報告"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Obsidian 用於 OffSec 考試報告&body=Check out this article: https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&title=Obsidian 用於 OffSec 考試報告"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&name=Obsidian 用於 OffSec 考試報告&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.r4ulux.cc/2025/01/06/03-install-obsidian/&t=Obsidian 用於 OffSec 考試報告"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    r4ulux
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Articles</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
